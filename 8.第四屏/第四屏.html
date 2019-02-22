@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>1130</title>
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+  <!--最外侧包裹容器-->
+  <div id="wrap">
+    <!--头部区域-->
+    <header id="header">
+      <!--头部承接内容区域-->
+      <div class="headerMain">
+        <!--左侧logo区-->
+        <h1 class="logo">
+          <a href="http://wwww.atguigu.com">
+            <img src="./img/logo.png" alt="尚硅谷IT教育">
+          </a>
+        </h1>
+        <!--右侧导航区-->
+        <nav class="nav">
+          <ul class="navList clearfix">
+            <li class="navItem">
+              <a href="javascript:;">
+                <div class="up"><img src="./img/home_gruen.png"></div>
+                <div class="down"><img src="./img/home.png"></div>
+              </a>
+            </li>
+            <li class="navItem">
+              <a href="javascript:;">
+                <div class="up">Course</div>
+                <div class="down">Course</div>
+              </a>
+            </li>
+            <li class="navItem">
+              <a href="javascript:;">
+                <div class="up">Works</div>
+                <div class="down">Works</div>
+              </a>
+            </li>
+            <li class="navItem">
+              <a href="javascript:;">
+                <div class="up">About</div>
+                <div class="down">About</div>
+              </a>
+            </li>
+            <li class="navItem">
+              <a href="javascript:;">
+                <div class="up">Team</div>
+                <div class="down">Team</div>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!--三角-->
+        <div class="arrow"></div>
+      </div>
+    </header>
+    <!--内容区-->
+    <section id="content">
+      <ul class="contentList">
+        <!--第一屏-->
+        <li class="contentItem">
+          <div class="contentInner">
+            home
+          </div>
+        </li>
+        <!--第二屏-->
+        <li class="contentItem">
+          <div class="contentInner">
+            course
+          </div>
+        </li>
+        <!--第三屏-->
+        <li class="contentItem works">
+          <div class="contentInner">
+            <div class="works1">
+              <p class="commonTitle">EINBLICK</p>
+              <p class="commonTitle">ERKENNTNIS</p>
+              <p class="commonTitle">ERGEBNIS</p>
+            </div>
+            <div class="works2 clearfix">
+              <div class="works2Item">
+                <img src="./img/worksimg1.jpg">
+                <div class="mask">
+                  <span>爱马仕·巴黎世家·卡地亚</span>
+                  <div class="icon"></div>
+                </div>
+              </div>
+              <div class="works2Item">
+                <img src="./img/worksimg2.jpg">
+                <div class="mask">
+                  <span>爱马仕·巴黎世家·卡地亚</span>
+                  <div class="icon"></div>
+                </div>
+              </div>
+              <div class="works2Item">
+                <img src="./img/worksimg3.jpg">
+                <div class="mask">
+                  <span>爱马仕·巴黎世家·卡地亚</span>
+                  <div class="icon"></div>
+                </div>
+              </div>
+              <div class="works2Item">
+                <img src="./img/worksimg4.jpg">
+                <div class="mask">
+                  <span>爱马仕·巴黎世家·卡地亚</span>
+                  <div class="icon"></div>
+                </div>
+              </div>
+            </div>
+            <div class="works3">
+              <div class="robot"></div>
+            </div>
+          </div>
+        </li>
+        <!--第四屏-->
+        <li class="contentItem about">
+          <div class="contentInner">
+            <div class="about1">
+              <p class="commonTitle">EINBLICK</p>
+              <p class="commonTitle">ERKENNTNIS</p>
+              <p class="commonTitle">ERGEBNIS</p>
+            </div>
+            <div class="about2">
+              <p class="commonText">
+                Der bunte Medienmix ist die Faszination die uns antreibt und das, was man an uns schätzt. Von A bis Z und von vorne bis hinten nehmen wir Ihr Projekt unter unsere Fittiche und lassen es zu etwas Großartigem heranwachsen.
+              </p>
+            </div>
+            <div class="about3">
+              <div class="about3Item">
+                <img src="./img/about2.jpg">
+                <div class="mask">
+                  <ul class="maskList">
+                    <li class="maskItem">
+                      <img src="./img/about1.jpg">
+                    </li>
+                    <li class="maskItem">
+                      <img src="./img/about1.jpg">
+                    </li>
+                    <li class="maskItem">
+                      <img src="./img/about1.jpg">
+                    </li>
+                    <li class="maskItem">
+                      <img src="./img/about1.jpg">
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="about3Item">
+                <img src="./img/about3.jpg">
+                <div class="mask">
+                  <ul class="maskList">
+                    <li class="maskItem">
+                      <img src="./img/about4.jpg">
+                    </li>
+                    <li class="maskItem">
+                      <img src="./img/about4.jpg">
+                    </li>
+                    <li class="maskItem">
+                      <img src="./img/about4.jpg">
+                    </li>
+                    <li class="maskItem">
+                      <img src="./img/about4.jpg">
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <!--第五屏-->
+        <li class="contentItem">
+          <div class="contentInner">
+            team
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <script>
+   window.onload = function () {
+     //获取元素
+     var header = document.getElementById('header');
+     var content = document.getElementById('content');
+     var contentItems = document.querySelectorAll('#content .contentItem');
+     var contentList = document.querySelector('#content .contentList')
+     var arrow = document.querySelector('#header .headerMain .arrow');
+     var navUps = document.querySelectorAll('#header .headerMain .nav .navList .navItem .up');
+     var navItems = document.querySelectorAll('#header .headerMain .nav .navList .navItem');
+     var index = 3;
+     var timeId = null;
+     
+     //初始化第一个up元素高亮
+     navUps[index].style.width = '100%'
+     //初始化三角的位置
+     arrow.style.left = navItems[index].getBoundingClientRect().left + navItems[index].offsetWidth/2 + 'px';
+     
+     //响应缩放逻辑
+     window.onresize = function () {
+       contentBind()
+       contentMove(index)
+     }
+     //头部交互
+     headerBind()
+     function headerBind() {
+       for (var i=0; i<navItems.length; i++ ){
+         var item = navItems[i];
+         item.index = i
+         //给每一个导航的li加点击事件
+         item.onclick = function () {
+           index = this.index
+           contentMove(this.index)
+         }
+       }
+     }
+    
+     //内容区逻辑
+     contentBind()
+     function contentBind() {
+       //设置承接内容盒子的高度
+       content.style.height = document.documentElement.clientHeight - header.offsetHeight + 'px';
+       //给每一屏设置高度
+       for (var i=0; i<contentItems.length; i++ ){
+         contentItems[i].style.height = document.documentElement.clientHeight - header.offsetHeight + 'px';
+       }
+     }
+     
+     //屏幕切换逻辑
+     contentMove(3)
+     function contentMove(index) {
+       //1.清除所有高亮效果
+       for (var j=0; j<navUps.length; j++ ){
+         navUps[j].style.width = ''
+       }
+       //2.给当前点击的加上高亮
+       navUps[index].style.width = '100%'
+       //3.移动三角到当前位置
+       arrow.style.left = navItems[index].getBoundingClientRect().left + navItems[index].offsetWidth/2 + 'px';
+       //4.移动内容区
+       contentList.style.top = -(index)*(document.documentElement.clientHeight - header.offsetHeight) +'px'
+
+     }
+
+      //鼠标滚轮逻辑
+     //ie/chrome
+     document.onmousewheel = function (event) {
+       //如果之前有定时器，清除之前的定时器
+       clearTimeout(timeId)
+       timeId = setTimeout(function () {
+         scrollMove(event)
+       },200)
+     }
+     //firefox
+     if(document.addEventListener){
+       document.addEventListener('DOMMouseScroll',function () {
+         //如果之前有定时器，清除之前的定时器
+         clearTimeout(timeId)
+         timeId = setTimeout(function () {
+           scrollMove(event)
+         },200)
+       });
+     }
+     function scrollMove(event) {
+       event = event || window.event;
+       var flag = '';
+       if(event.wheelDelta){
+         //ie/chrome
+         if(event.wheelDelta > 0){
+           //上
+           flag = 'up';
+         }else {
+           //下
+           flag = 'down'
+         }
+       }
+       else if(event.detail){
+         //firefox
+         if(event.detail < 0){
+           //上
+           flag = 'up';
+         }else {
+           //下
+           flag = 'down'
+         }
+       }
+        //最终判断滚轮的方向
+       switch (flag){
+         case 'up':
+           //滚轮向上滚动
+           if(index>0){
+             index--
+             contentMove(index)
+           }
+           break;
+         case 'down':
+           //滚轮向下滚动
+           if(index < navItems.length-1){
+             index++
+             contentMove(index)
+           }
+           break;
+       }
+
+       //取消默认行为
+       event.preventDefault && event.preventDefault();
+       return false;
+     }
+     
+   }
+    
+  </script>
+</body>
+</html>
