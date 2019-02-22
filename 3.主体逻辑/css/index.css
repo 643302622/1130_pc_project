@@ -1,0 +1,108 @@
+/*cssreset*/
+html,body{height: 100%; overflow: hidden;}
+html,body,h1,h2,h3,h4,h5,h6,p,ul,li{margin: 0px;padding: 0px;font: 14px "微软雅黑";}
+a{text-decoration: none;display: block;}
+li{list-style: none;}
+img{display: block;}
+
+/*清除浮动*/
+.clearfix{*zoom: 1;}
+.clearfix:after{content: "";display: block;clear: both;}
+
+/*头部样式*/
+#wrap{
+  width: 100%;
+}
+#header{
+  position: relative;
+  background-color: skyblue;
+  width: 100%;
+  height: 80px;
+}
+#header .headerMain{
+  margin: 0 auto;
+  background-color: pink;
+  width: 1100px;
+  height: 80px;
+}
+#header .headerMain .logo{
+   margin-top: 15px;
+   float: left;
+ }
+#header .headerMain .nav{
+  margin-top: 50px;
+  float: right;
+}
+#header .headerMain .nav .navList .navItem{
+  position: relative;
+  float: left;
+  margin-left: 40px;
+}
+#header .headerMain .nav .navList .navItem .up{
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: black;
+  width: 0;
+  overflow: hidden;
+  transition: 1s width;
+}
+#header .headerMain .nav .navList .navItem .down{
+  color: #009EE0;
+}
+#header .headerMain .nav .navList .navItem:hover .up{
+  width: 100%;
+}
+#header .headerMain .arrow{
+  position: absolute;
+  left: 50%;
+  bottom: -11px;
+  transform: translateX(-50%);
+  background-image: url("../img/arrow.png");
+  background-size: 21px 11px;
+  width: 21px;
+  height: 11px;
+  transition: 1s left;
+  z-index: 3;
+}
+
+/*内容区*/
+#content{
+  position: relative;
+  width: 100%;
+  /*height: 屏幕高度-头部高度*/
+}
+#content .contentList{
+  position: absolute;
+}
+#content .contentItem{
+  position: relative;
+  width: 100%;
+  /*height: 屏幕高度-头部高度*/
+}
+#content .contentItem:nth-child(1){
+  background-image: url("../img/bg1.jpg");
+}
+#content .contentItem:nth-child(2){
+  background-image: url("../img/bg2.jpg");
+}
+#content .contentItem:nth-child(3){
+  background-image: url("../img/bg3.jpg");
+}
+#content .contentItem:nth-child(4){
+  background-image: url("../img/bg4.jpg");
+}
+#content .contentItem:nth-child(5){
+  background-image: url("../img/bg5.jpg");
+}
+#content .contentItem .contentInner{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: orange;
+  width: 1100px;
+  height: 520px;
+}

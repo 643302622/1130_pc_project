@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>1130</title>
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+  <!--最外侧包裹容器-->
+  <div id="wrap">
+    <!--头部区域-->
+    <header id="header">
+      <!--头部承接内容区域-->
+      <div class="headerMain">
+        <!--左侧logo区-->
+        <h1 class="logo">
+          <a href="http://wwww.atguigu.com">
+            <img src="./img/logo.png" alt="尚硅谷IT教育">
+          </a>
+        </h1>
+        <!--右侧导航区-->
+        <nav class="nav">
+          <ul class="navList clearfix">
+            <li class="navItem">
+              <a href="javascript:;">
+                <div class="up"><img src="./img/home_gruen.png"></div>
+                <div class="down"><img src="./img/home.png"></div>
+              </a>
+            </li>
+            <li class="navItem">
+              <a href="javascript:;">
+                <div class="up">Course</div>
+                <div class="down">Course</div>
+              </a>
+            </li>
+            <li class="navItem">
+              <a href="javascript:;">
+                <div class="up">Works</div>
+                <div class="down">Works</div>
+              </a>
+            </li>
+            <li class="navItem">
+              <a href="javascript:;">
+                <div class="up">About</div>
+                <div class="down">About</div>
+              </a>
+            </li>
+            <li class="navItem">
+              <a href="javascript:;">
+                <div class="up">Team</div>
+                <div class="down">Team</div>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!--三角-->
+        <div class="arrow"></div>
+      </div>
+    </header>
+    <!--内容区-->
+    <section id="content">
+      <ul class="contentList">
+        <!--第一屏-->
+        <li class="contentItem">
+          <div class="contentInner">
+            home
+          </div>
+        </li>
+        <!--第二屏-->
+        <li class="contentItem">
+          <div class="contentInner">
+            home
+          </div>
+        </li>
+        <!--第三屏-->
+        <li class="contentItem">
+          <div class="contentInner">
+            home
+          </div>
+        </li>
+        <!--第四屏-->
+        <li class="contentItem">
+          <div class="contentInner">
+            home
+          </div>
+        </li>
+        <!--第五屏-->
+        <li class="contentItem">
+          <div class="contentInner">
+            home
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <script>
+   window.onload = function () {
+     //获取元素
+     var header = document.getElementById('header')
+     var content = document.getElementById('content')
+     var contentItems = document.querySelectorAll('#content .contentItem')
+     var arrow = document.querySelector('#header .headerMain .arrow');
+     var navUps = document.querySelectorAll('#header .headerMain .nav .navList .navItem .up');
+     var navItems = document.querySelectorAll('#header .headerMain .nav .navList .navItem');
+
+     //初始化第一个up元素高亮
+     navUps[0].style.width = '100%'
+     //初始化三角的位置
+     arrow.style.left = navItems[0].getBoundingClientRect().left + navItems[0].offsetWidth/2 + 'px';
+     
+     //头部交互
+     headerBind()
+     function headerBind() {
+       for (var i=0; i<navItems.length; i++ ){
+         var item = navItems[i];
+         item.index = i
+         //给每一个导航的li加点击事件
+         item.onclick = function () {
+           //1.清除所有高亮效果
+           for (var j=0; j<navUps.length; j++ ){
+             navUps[j].style.width = ''
+           }
+           //2.给当前点击的加上高亮
+           navUps[this.index].style.width = '100%'
+           //3.移动三角到当前位置
+           arrow.style.left = navItems[this.index].getBoundingClientRect().left + navItems[this.index].offsetWidth/2 + 'px';
+         }
+       }
+     }
+     
+     //设置承接内容盒子的高度
+     content.style.height = document.documentElement.clientHeight - header.offsetHeight + 'px';
+     //给每一屏设置高度
+     for (var i=0; i<contentItems.length; i++ ){
+       contentItems[i].style.height = document.documentElement.clientHeight - header.offsetHeight + 'px';
+     }
+     
+   }
+    
+  </script>
+</body>
+</html>
