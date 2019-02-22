@@ -104,7 +104,7 @@
      var arrow = document.querySelector('#header .headerMain .arrow');
      var navUps = document.querySelectorAll('#header .headerMain .nav .navList .navItem .up');
      var navItems = document.querySelectorAll('#header .headerMain .nav .navList .navItem');
-
+     var index = 0
      //初始化第一个up元素高亮
      navUps[0].style.width = '100%'
      //初始化三角的位置
@@ -118,25 +118,89 @@
          item.index = i
          //给每一个导航的li加点击事件
          item.onclick = function () {
-           //1.清除所有高亮效果
-           for (var j=0; j<navUps.length; j++ ){
-             navUps[j].style.width = ''
-           }
-           //2.给当前点击的加上高亮
-           navUps[this.index].style.width = '100%'
-           //3.移动三角到当前位置
-           arrow.style.left = navItems[this.index].getBoundingClientRect().left + navItems[this.index].offsetWidth/2 + 'px';
-           //4.移动内容区
-           contentList.style.top = -(this.index)*(document.documentElement.clientHeight - header.offsetHeight) +'px'
+           index = this.index
+           contentMove(this.index)
          }
        }
      }
+    
+     //内容区逻辑
+     contentBind()
+     function contentBind() {
+       //设置承接内容盒子的高度
+       content.style.height = document.documentElement.clientHeight - header.offsetHeight + 'px';
+       //给每一屏设置高度
+       for (var i=0; i<contentItems.length; i++ ){
+         contentItems[i].style.height = document.documentElement.clientHeight - header.offsetHeight + 'px';
+       }
+     }
      
-     //设置承接内容盒子的高度
-     content.style.height = document.documentElement.clientHeight - header.offsetHeight + 'px';
-     //给每一屏设置高度
-     for (var i=0; i<contentItems.length; i++ ){
-       contentItems[i].style.height = document.documentElement.clientHeight - header.offsetHeight + 'px';
+     //屏幕切换逻辑
+     function contentMove(index) {
+       //1.清除所有高亮效果
+       for (var j=0; j<navUps.length; j++ ){
+         navUps[j].style.width = ''
+       }
+       //2.给当前点击的加上高亮
+       navUps[index].style.width = '100%'
+       //3.移动三角到当前位置
+       arrow.style.left = navItems[index].getBoundingClientRect().left + navItems[index].offsetWidth/2 + 'px';
+       //4.移动内容区
+       contentList.style.top = -(index)*(document.documentElement.clientHeight - header.offsetHeight) +'px'
+
+     }
+
+      //鼠标滚轮逻辑
+     //ie/chrome
+     document.onmousewheel = scrollMove;
+     //firefox
+     if(document.addEventListener){
+       document.addEventListener('DOMMouseScroll',scrollMove);
+     }
+     function scrollMove(event) {
+       event = event || window.event;
+       var flag = '';
+       if(event.wheelDelta){
+         //ie/chrome
+         if(event.wheelDelta > 0){
+           //上
+           flag = 'up';
+         }else {
+           //下
+           flag = 'down'
+         }
+       }
+       else if(event.detail){
+         //firefox
+         if(event.detail < 0){
+           //上
+           flag = 'up';
+         }else {
+           //下
+           flag = 'down'
+         }
+       }
+        //最终判断滚轮的方向
+       switch (flag){
+         case 'up':
+           //滚轮向上滚动
+           if(index>0){
+             index--
+             contentMove(index)
+           }
+           break;
+         case 'down':
+           //滚轮向下滚动
+           if(index < navItems.length-1){
+             index++
+             contentMove(index)
+           }
+           break;
+       }
+
+       //取消默认行为
+       event.preventDefault && event.preventDefault();
+       return false;
      }
      
    }
