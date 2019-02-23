@@ -65,8 +65,8 @@
           <div class="contentInner">
             <!--承接每一个轮播图的容器-->
             <ul class="homeList">
-              <li class="homeItem leftHide"><div class="commonTitle">one layer</div></li>
-              <li class="homeItem rightShow"><div class="commonTitle">two layer</div></li>
+              <li class="homeItem active"><div class="commonTitle">one layer</div></li>
+              <li class="homeItem "><div class="commonTitle">two layer</div></li>
               <li class="homeItem "><div class="commonTitle">three layer</div></li>
               <li class="homeItem "><div class="commonTitle">four layer</div></li>
             </ul>
@@ -271,22 +271,25 @@
      var arrow = document.querySelector('#header .headerMain .arrow');
      var navUps = document.querySelectorAll('#header .headerMain .nav .navList .navItem .up');
      var navItems = document.querySelectorAll('#header .headerMain .nav .navList .navItem');
-     var index = 0;
+     var homeIcons = document.querySelectorAll('#content .contentList .home .homeNav .homeIcon')
+     var homeItems = document.querySelectorAll('#content .contentList .home .homeList .homeItem')
+     var index = 0;//定义主体内容区的索引，（鼠标滚轮的部分）
+     var oldIndex = 0
      var timeId = null;
-     
-     //初始化第一个up元素高亮
-     navUps[index].style.width = '100%'
-     //初始化三角的位置
-     arrow.style.left = navItems[index].getBoundingClientRect().left + navItems[index].offsetWidth/2 + 'px';
-     
+    
      //响应缩放逻辑
      window.onresize = function () {
        contentBind()
        contentMove(index)
      }
+     
      //头部交互
      headerBind()
      function headerBind() {
+       //初始化第一个up元素高亮
+       navUps[index].style.width = '100%'
+       //初始化三角的位置
+       arrow.style.left = navItems[index].getBoundingClientRect().left + navItems[index].offsetWidth/2 + 'px';
        for (var i=0; i<navItems.length; i++ ){
          var item = navItems[i];
          item.index = i
@@ -325,69 +328,98 @@
 
      }
 
-      //鼠标滚轮逻辑
-     //ie/chrome
-     document.onmousewheel = function (event) {
-       //如果之前有定时器，清除之前的定时器
-       clearTimeout(timeId)
-       timeId = setTimeout(function () {
-         scrollMove(event)
-       },200)
-     }
-     //firefox
-     if(document.addEventListener){
-       document.addEventListener('DOMMouseScroll',function () {
+     //鼠标滚轮逻辑
+     mouseScroll()
+     function mouseScroll() {
+       //鼠标滚轮逻辑
+       //ie/chrome
+       document.onmousewheel = function (event) {
          //如果之前有定时器，清除之前的定时器
          clearTimeout(timeId)
          timeId = setTimeout(function () {
            scrollMove(event)
          },200)
-       });
-     }
-     function scrollMove(event) {
-       event = event || window.event;
-       var flag = '';
-       if(event.wheelDelta){
-         //ie/chrome
-         if(event.wheelDelta > 0){
-           //上
-           flag = 'up';
-         }else {
-           //下
-           flag = 'down'
-         }
        }
-       else if(event.detail){
-         //firefox
-         if(event.detail < 0){
-           //上
-           flag = 'up';
-         }else {
-           //下
-           flag = 'down'
-         }
+       //firefox
+       if(document.addEventListener){
+         document.addEventListener('DOMMouseScroll',function () {
+           //如果之前有定时器，清除之前的定时器
+           clearTimeout(timeId)
+           timeId = setTimeout(function () {
+             scrollMove(event)
+           },200)
+         });
        }
-        //最终判断滚轮的方向
-       switch (flag){
-         case 'up':
-           //滚轮向上滚动
-           if(index>0){
-             index--
-             contentMove(index)
+       function scrollMove(event) {
+         event = event || window.event;
+         var flag = '';
+         if(event.wheelDelta){
+           //ie/chrome
+           if(event.wheelDelta > 0){
+             //上
+             flag = 'up';
+           }else {
+             //下
+             flag = 'down'
            }
-           break;
-         case 'down':
-           //滚轮向下滚动
-           if(index < navItems.length-1){
-             index++
-             contentMove(index)
+         }
+         else if(event.detail){
+           //firefox
+           if(event.detail < 0){
+             //上
+             flag = 'up';
+           }else {
+             //下
+             flag = 'down'
            }
-           break;
-       }
+         }
+         //最终判断滚轮的方向
+         switch (flag){
+           case 'up':
+             //滚轮向上滚动
+             if(index>0){
+               index--
+               contentMove(index)
+             }
+             break;
+           case 'down':
+             //滚轮向下滚动
+             if(index < navItems.length-1){
+               index++
+               contentMove(index)
+             }
+             break;
+         }
 
-       //取消默认行为
-       event.preventDefault && event.preventDefault();
-       return false;
+         //取消默认行为
+         event.preventDefault && event.preventDefault();
+         return false;
+       }
+     }
+     
+     for (var i=0; i<homeIcons.length; i++ ){
+       var item = homeIcons[i];
+       item.index = i
+       item.onclick = function () {
+         //1.重置所有小圆点的样式
+         for (var j=0; j<homeIcons.length; j++ ){
+           homeIcons[j].className = 'homeIcon'
+         }
+         //2.给当前点击的加高亮
+         this.className = 'homeIcon active'
+         //3.判断当前点击的和之前的比较，（是上一张，还是下一张）
+         if(oldIndex < this.index){
+           //用户点击的是后面的（右面的）某一张
+           homeItems[oldIndex].className = 'homeItem leftHide';//之前的一张隐藏
+           homeItems[this.index].className = 'homeItem rightShow'//当前这一张显示
+         }
+         else if(oldIndex > this.index){
+          //如果用户点击的是之前的某一张
+           homeItems[oldIndex].className = 'homeItem rightHide';//之前的一张隐藏
+           homeItems[this.index].className = 'homeItem leftShow'//当前这一张显示
+         }
+         oldIndex = this.index
+       }
      }
      
    }
