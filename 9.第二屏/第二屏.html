@@ -67,9 +67,76 @@
           </div>
         </li>
         <!--第二屏-->
-        <li class="contentItem">
+        <li class="contentItem course">
           <div class="contentInner">
-            course
+            <div class="course1">
+              <p class="commonTitle">EINIGE</p>
+              <p class="commonTitle">UNSERER</p>
+              <p class="commonTitle">KUNDEN</p>
+            </div>
+            <div class="course2">
+              <p class="commonText">
+                Das Kundenvertrauen in unsere Kompetenz ist die notwendige Basis einer erfolgreichen Zusammenarbeit, gleichzeitig aber auch das größte Lob, das man uns entgegenbringen kann.
+              </p>
+              <p class="commonText">
+                Diese und viele weitere große und kleine Kunden vertrauen uns seit Jahren, was uns stolz macht, und dafür sagen wir an dieser Stelle einfach mal.
+              </p>
+            </div>
+            <div class="course3 clearfix">
+              <div class="plus"></div>
+              <div class="plus"></div>
+              <div class="plus"></div>
+              <div class="plus"></div>
+              <div class="plus"></div>
+              <div class="course3Item">
+                <div class="front"></div>
+                <div class="back">我是一段文字</div>
+              </div>
+              <div class="course3Item">
+                <div class="front"></div>
+                <div class="back">班长太帅了</div>
+              </div>
+              <div class="course3Item">
+                <div class="front"></div>
+                <div class="back">1130就业顺利</div>
+              </div>
+              <div class="course3Item">
+                <div class="front"></div>
+                <div class="back">1130就业顺利</div>
+              </div>
+              <div class="course3Item">
+                <div class="front"></div>
+                <div class="back">1130就业顺利</div>
+              </div>
+              <div class="course3Item">
+                <div class="front"></div>
+                <div class="back">1130就业顺利</div>
+              </div>
+              <div class="course3Item">
+                <div class="front"></div>
+                <div class="back">1130就业顺利</div>
+              </div>
+              <div class="course3Item">
+                <div class="front"></div>
+                <div class="back"></div>
+              </div>
+              <div class="course3Item">
+                <div class="front"></div>
+                <div class="back"></div>
+              </div>
+              <div class="course3Item">
+                <div class="front"></div>
+                <div class="back"></div>
+              </div>
+              <div class="course3Item">
+                <div class="front"></div>
+                <div class="back"></div>
+              </div>
+              <div class="course3Item">
+                <div class="front"></div>
+                <div class="back"></div>
+              </div>
+            </div>
           </div>
         </li>
         <!--第三屏-->
@@ -191,7 +258,7 @@
      var arrow = document.querySelector('#header .headerMain .arrow');
      var navUps = document.querySelectorAll('#header .headerMain .nav .navList .navItem .up');
      var navItems = document.querySelectorAll('#header .headerMain .nav .navList .navItem');
-     var index = 3;
+     var index = 1;
      var timeId = null;
      
      //初始化第一个up元素高亮
@@ -230,7 +297,7 @@
      }
      
      //屏幕切换逻辑
-     contentMove(3)
+     contentMove(1)
      function contentMove(index) {
        //1.清除所有高亮效果
        for (var j=0; j<navUps.length; j++ ){
