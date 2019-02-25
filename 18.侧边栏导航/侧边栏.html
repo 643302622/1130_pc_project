@@ -59,6 +59,7 @@
     </header>
     <!--内容区-->
     <section id="content">
+      <!--包裹每一屏的容器-->
       <ul class="contentList">
         <!--第一屏-->
         <li class="contentItem home">
@@ -277,6 +278,15 @@
           </div>
         </li>
       </ul>
+      <!--侧边栏导航容器-->
+      <ul class="menuList">
+        <li class="menuItem active"></li>
+        <li class="menuItem"></li>
+        <li class="menuItem"></li>
+        <li class="menuItem"></li>
+        <li class="menuItem"></li>
+      </ul>
+      
     </section>
   </div>
 
@@ -292,9 +302,10 @@
      var navItems = document.querySelectorAll('#header .headerMain .nav .navList .navItem');
      var homeIcons = document.querySelectorAll('#content .contentList .home .homeNav .homeIcon')
      var homeItems = document.querySelectorAll('#content .contentList .home .homeList .homeItem')
+     var menuItems = document.querySelectorAll('#content .menuList .menuItem');
      var team3Items = document.querySelectorAll('#content .contentList .team .team3 .team3List .team3Item')
      var team3 = document.querySelector('#content .contentList .team .team3');
-     var index = 4;//定义主体内容区的索引，（鼠标滚轮的部分）
+     var index = 0;//定义主体内容区的索引，（鼠标滚轮的部分）
      var oldIndex = 0//轮播图部分的索引
      var timeId = null;//鼠标滚轮的id
      var autoTimeId = null;//自动轮播部分的id
@@ -339,17 +350,23 @@
      }
      
      //屏幕切换逻辑
-     contentMove(4)
+//     contentMove()
      function contentMove(index) {
-       //1.清除所有高亮效果
+       //1.清除导航区所有高亮效果
        for (var j=0; j<navUps.length; j++ ){
          navUps[j].style.width = ''
        }
-       //2.给当前点击的加上高亮
+       //2.给当前点击的导航加上高亮
        navUps[index].style.width = '100%'
-       //3.移动三角到当前位置
+       //3.重置所有侧边栏按钮高亮
+       for (var j=0; j<menuItems.length; j++ ){
+         menuItems[j].className = 'menuItem';
+       }
+       //4.给当前的加上高亮
+       menuItems[index].className = 'menuItem active'
+       //5.移动三角到当前位置
        arrow.style.left = navItems[index].getBoundingClientRect().left + navItems[index].offsetWidth/2 + 'px';
-       //4.移动内容区
+       //6.移动内容区
        contentList.style.top = -(index)*(document.documentElement.clientHeight - header.offsetHeight) +'px'
 
      }
@@ -498,35 +515,38 @@
      }
      
      //第五屏鼠标悬浮逻辑
-     team3.onmouseleave =  function () {
-       //鼠标移除整个team3容器，重置透明度
-       for (var j=0; j<team3Items.length; j++ ){
-         team3Items[j].style.opacity = '0.5'
-       }
-       myCanvas.remove();
-       myCanvas = null;
-       clearInterval(time1)
-       clearInterval(time2)
-     }
-     for (var i=0; i<team3Items.length; i++ ){
-       var item = team3Items[i];
-       //当鼠标移入老师所在图层触发的逻辑
-       item.onmouseenter = function () {
-         //重置所有图层为半透明
+     team()
+     function team() {
+       team3.onmouseleave =  function () {
+         //鼠标移除整个team3容器，重置透明度
          for (var j=0; j<team3Items.length; j++ ){
-           team3Items[j].style.opacity = '0.5';
+           team3Items[j].style.opacity = '0.5'
          }
-         //给当前鼠标所在的透明度为1
-         this.style.opacity = '1';
-         //如果全局没有myCanvas层，新建
-         if(!myCanvas){
-           myCanvas = document.createElement('canvas');
-           myCanvas.width = this.offsetWidth;
-           myCanvas.height = this.offsetHeight;
-           team3.appendChild(myCanvas);
-           addAnimation();
+         myCanvas.remove();
+         myCanvas = null;
+         clearInterval(time1)
+         clearInterval(time2)
+       }
+       for (var i=0; i<team3Items.length; i++ ){
+         var item = team3Items[i];
+         //当鼠标移入老师所在图层触发的逻辑
+         item.onmouseenter = function () {
+           //重置所有图层为半透明
+           for (var j=0; j<team3Items.length; j++ ){
+             team3Items[j].style.opacity = '0.5';
+           }
+           //给当前鼠标所在的透明度为1
+           this.style.opacity = '1';
+           //如果全局没有myCanvas层，新建
+           if(!myCanvas){
+             myCanvas = document.createElement('canvas');
+             myCanvas.width = this.offsetWidth;
+             myCanvas.height = this.offsetHeight;
+             team3.appendChild(myCanvas);
+             addAnimation();
+           }
+           myCanvas.style.left = this.offsetLeft + 'px';
          }
-         myCanvas.style.left = this.offsetLeft + 'px';
        }
      }
      
@@ -565,7 +585,6 @@
 
        //创造圆的工厂
        time2 = setInterval(function () {
-         console.log(arr);
          var obj = {}
          obj.r = Math.floor(Math.random()*8+2)
          obj.x = Math.floor(Math.random()*myCanvas.width);
@@ -582,6 +601,18 @@
          obj.deg = 0;
          obj.pathScale = Math.floor(Math.random()*80 + 20)
        },17)
+     }
+     
+     //侧边栏加点击事件
+     for (var i=0; i<menuItems.length; i++ ){
+       var item = menuItems[i];
+       item.index = i;
+       item.onclick = function () {
+         //1.切换到点击的那一屏
+         contentMove(this.index)
+         //2.维护鼠标滚轮计数器
+         index = this.index;
+       }
      }
      
    }
