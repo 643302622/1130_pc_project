@@ -344,6 +344,8 @@
          item.index = i
          //给每一个导航的li加点击事件
          item.onclick = function () {
+           animationArr[index].outAnimation()
+           animationArr[this.index].inAnimation()
            index = this.index
            contentMove(this.index)
          }
@@ -362,7 +364,6 @@
      }
      
      //屏幕切换逻辑
-//     contentMove()
      function contentMove(index) {
        //1.清除导航区所有高亮效果
        for (var j=0; j<navUps.length; j++ ){
@@ -380,7 +381,6 @@
        arrow.style.left = navItems[index].getBoundingClientRect().left + navItems[index].offsetWidth/2 + 'px';
        //6.移动内容区
        contentList.style.top = -(index)*(document.documentElement.clientHeight - header.offsetHeight) +'px'
-
      }
 
      //鼠标滚轮逻辑
@@ -433,14 +433,18 @@
            case 'up':
              //滚轮向上滚动
              if(index>0){
+               animationArr[index].outAnimation()
                index--
+               animationArr[index].inAnimation()
                contentMove(index)
              }
              break;
            case 'down':
              //滚轮向下滚动
              if(index < navItems.length-1){
+               animationArr[index].outAnimation()
                index++
+               animationArr[index].inAnimation()
                contentMove(index)
              }
              break;
@@ -624,6 +628,8 @@
          item.onclick = function () {
            //1.切换到点击的那一屏
            contentMove(this.index)
+           animationArr[index].outAnimation()
+           animationArr[this.index].inAnimation()
            //2.维护鼠标滚轮计数器
            index = this.index;
          }
@@ -644,17 +650,16 @@
        }
      }
      
+     //出入场动画的容器
      var animationArr = [
        {
          inAnimation:function () {
            var homeList = document.querySelector('#content .contentList .home .homeList');
            var homeNav = document.querySelector('#content .contentList .home .homeNav');
-
            homeList.style.transform = 'translate(0,0)';
            homeList.style.opacity = '1'
            homeNav.style.transform = 'translate(0,0)';
            homeNav.style.opacity = '1'
-           
          },
          outAnimation:function () {
            var homeList = document.querySelector('#content .contentList .home .homeList');
@@ -672,11 +677,9 @@
            var plane1 = document.querySelector('#content .contentList .course .plane1')
            var plane2 = document.querySelector('#content .contentList .course .plane2')
            var plane3 = document.querySelector('#content .contentList .course .plane3')
-
            plane1.style.transform = 'translate(0,0)';
            plane2.style.transform = 'translate(0,0)';
            plane3.style.transform = 'translate(0,0)';
-
          },
          outAnimation:function () {
            var plane1 = document.querySelector('#content .contentList .course .plane1')
@@ -693,18 +696,16 @@
            var pencel1 = document.querySelector('#content .contentList .works .pencel1')
            var pencel2 = document.querySelector('#content .contentList .works .pencel2')
            var pencel3 = document.querySelector('#content .contentList .works .pencel3')
-
            pencel1.style.transform = 'translate(0,0)';
            pencel2.style.transform = 'translate(0,0)';
            pencel3.style.transform = 'translate(0,0)';
-
          },
          outAnimation:function () {
            var pencel1 = document.querySelector('#content .contentList .works .pencel1')
            var pencel2 = document.querySelector('#content .contentList .works .pencel2')
            var pencel3 = document.querySelector('#content .contentList .works .pencel3')
 
-           pencel1.style.transform = 'translate(0,-200px)';
+           pencel1.style.transform = 'translate(0,-40px)';
            pencel2.style.transform = 'translate(0,200px)';
            pencel3.style.transform = 'translate(200px,200px)';
          }
@@ -713,10 +714,8 @@
          inAnimation:function () {
            var box1 = document.querySelector('#content .contentList .about .about3 .about3Item:nth-child(1)')
            var box2 = document.querySelector('#content .contentList .about .about3 .about3Item:nth-child(2)')
-
            box1.style.transform = 'rotate(0)';
            box2.style.transform = 'rotate(0)';
-
          },
          outAnimation:function () {
            var box1 = document.querySelector('#content .contentList .about .about3 .about3Item:nth-child(1)')
@@ -730,7 +729,6 @@
          inAnimation:function () {
            var team1 = document.querySelector('#content .contentList .team .team1')
            var team2 = document.querySelector('#content .contentList .team .team2')
-
            team1.style.transform = 'translate(0,0)';
            team2.style.transform = 'translate(0,0)';
 
@@ -738,17 +736,23 @@
          outAnimation:function () {
            var team1 = document.querySelector('#content .contentList .team .team1')
            var team2 = document.querySelector('#content .contentList .team .team2')
-
            team1.style.transform = 'translate(-200px,0)';
            team2.style.transform = 'translate(200px,0)';
          }
        }
      ]
      
-     animationArr[4].outAnimation();
+     //临时控制第一屏入场
+//     animationArr[0].outAnimation();
+     for (var i=0; i<animationArr.length; i++ ){
+       animationArr[i].outAnimation()
+     }
      setTimeout(function () {
-       animationArr[4].inAnimation()
+       animationArr[0].inAnimation()
      },2000)
+     
+     
+     
      
    }
     
