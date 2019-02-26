@@ -8,6 +8,12 @@
 <body>
   <!--最外侧包裹容器-->
   <div id="wrap">
+    <!--开机动画遮罩层-->
+    <div id="mask">
+      <div class="maskUp"></div>
+      <span class="maskLine"></span>
+      <div class="maskDown"></div>
+    </div>
     <!--头部区域-->
     <header id="header">
       <!--头部承接内容区域-->
@@ -155,6 +161,9 @@
                 <div class="back"></div>
               </div>
             </div>
+            <div class="plane1"></div>
+            <div class="plane2"></div>
+            <div class="plane3"></div>
           </div>
         </li>
         <!--第三屏-->
@@ -198,6 +207,9 @@
             <div class="works3">
               <div class="robot"></div>
             </div>
+            <div class="pencel1"></div>
+            <div class="pencel2"></div>
+            <div class="pencel3"></div>
           </div>
         </li>
         <!--第四屏-->
@@ -295,9 +307,13 @@
   </div>
 
   <script>
-   window.onload = function () {
+   window.addEventListener('DOMContentLoaded',function () {
      //获取元素
      var header = document.getElementById('header');
+     var mask = document.getElementById('mask');
+     var maskUp = document.querySelector('#mask .maskUp');
+     var maskDown = document.querySelector('#mask .maskDown');
+     var maskLine = document.querySelector('#mask .maskLine');
      var myAudio = document.querySelector('#header .headerMain .music>audio');
      var myMusic = document.querySelector('#header .headerMain .music');
      var content = document.getElementById('content');
@@ -319,13 +335,13 @@
      var myCanvas = null;
      var time1 = null;
      var time2 = null;
-    
+
      //响应缩放逻辑
      window.onresize = function () {
        contentBind()
        contentMove(index)
      }
-     
+
      //头部交互
      headerBind()
      function headerBind() {
@@ -338,12 +354,14 @@
          item.index = i
          //给每一个导航的li加点击事件
          item.onclick = function () {
+           animationArr[index].outAnimation()
+           animationArr[this.index].inAnimation()
            index = this.index
            contentMove(this.index)
          }
        }
      }
-    
+
      //内容区逻辑
      contentBind()
      function contentBind() {
@@ -354,9 +372,8 @@
          contentItems[i].style.height = document.documentElement.clientHeight - header.offsetHeight + 'px';
        }
      }
-     
+
      //屏幕切换逻辑
-//     contentMove()
      function contentMove(index) {
        //1.清除导航区所有高亮效果
        for (var j=0; j<navUps.length; j++ ){
@@ -374,7 +391,6 @@
        arrow.style.left = navItems[index].getBoundingClientRect().left + navItems[index].offsetWidth/2 + 'px';
        //6.移动内容区
        contentList.style.top = -(index)*(document.documentElement.clientHeight - header.offsetHeight) +'px'
-
      }
 
      //鼠标滚轮逻辑
@@ -427,14 +443,18 @@
            case 'up':
              //滚轮向上滚动
              if(index>0){
+               animationArr[index].outAnimation()
                index--
+               animationArr[index].inAnimation()
                contentMove(index)
              }
              break;
            case 'down':
              //滚轮向下滚动
              if(index < navItems.length-1){
+               animationArr[index].outAnimation()
                index++
+               animationArr[index].inAnimation()
                contentMove(index)
              }
              break;
@@ -486,7 +506,7 @@
          }
        }
      }
-     
+
      //自动轮播
      autoPlay()
      function autoPlay() {
@@ -511,7 +531,7 @@
          homeItems[oldIndex].className = 'homeItem leftHide';
          homeItems[oldIndex+1>3?0:oldIndex+1].className = 'homeItem rightShow';
 
-         
+
          if(oldIndex<homeItems.length-1){
            oldIndex++
          }else{
@@ -519,7 +539,7 @@
          }
        },3000)
      }
-     
+
      //第五屏鼠标悬浮逻辑
      team()
      function team() {
@@ -555,7 +575,7 @@
          }
        }
      }
-     
+
      //给canvas层增加动画
      function addAnimation() {
        var painting = myCanvas.getContext('2d');
@@ -608,7 +628,7 @@
          obj.pathScale = Math.floor(Math.random()*80 + 20)
        },17)
      }
-     
+
      //侧边栏加点击事件
      menuList()
      function menuList() {
@@ -618,13 +638,18 @@
          item.onclick = function () {
            //1.切换到点击的那一屏
            contentMove(this.index)
+           animationArr[index].outAnimation()
+           animationArr[this.index].inAnimation()
            //2.维护鼠标滚轮计数器
            index = this.index;
          }
        }
      }
-     
-     myMusic.onclick = function () {
+
+     //音乐
+     music()
+     function music() {
+       myMusic.onclick = function () {
          if(myAudio.paused){
            myAudio.play();
            myMusic.style.backgroundImage = 'url("./img/musicon.gif")';
@@ -632,9 +657,136 @@
            myAudio.pause();
            myMusic.style.backgroundImage = 'url("./img/musicoff.gif")'
          }
+       }
      }
+
+     //出入场动画的容器
+     var animationArr = [
+       {
+         inAnimation:function () {
+           var homeList = document.querySelector('#content .contentList .home .homeList');
+           var homeNav = document.querySelector('#content .contentList .home .homeNav');
+           homeList.style.transform = 'translate(0,0)';
+           homeList.style.opacity = '1'
+           homeNav.style.transform = 'translate(0,0)';
+           homeNav.style.opacity = '1'
+         },
+         outAnimation:function () {
+           var homeList = document.querySelector('#content .contentList .home .homeList');
+           var homeNav = document.querySelector('#content .contentList .home .homeNav');
+
+           homeList.style.transform = 'translate(0,-200px)';
+           homeList.style.opacity = '0.5'
+           homeNav.style.transform = 'translate(0,200px)';
+           homeNav.style.opacity = '0.5'
+
+         }
+       },
+       {
+         inAnimation:function () {
+           var plane1 = document.querySelector('#content .contentList .course .plane1')
+           var plane2 = document.querySelector('#content .contentList .course .plane2')
+           var plane3 = document.querySelector('#content .contentList .course .plane3')
+           plane1.style.transform = 'translate(0,0)';
+           plane2.style.transform = 'translate(0,0)';
+           plane3.style.transform = 'translate(0,0)';
+         },
+         outAnimation:function () {
+           var plane1 = document.querySelector('#content .contentList .course .plane1')
+           var plane2 = document.querySelector('#content .contentList .course .plane2')
+           var plane3 = document.querySelector('#content .contentList .course .plane3')
+
+           plane1.style.transform = 'translate(-200px,-200px)';
+           plane2.style.transform = 'translate(-200px,200px)';
+           plane3.style.transform = 'translate(200px,-200px)';
+         }
+       },
+       {
+         inAnimation:function () {
+           var pencel1 = document.querySelector('#content .contentList .works .pencel1')
+           var pencel2 = document.querySelector('#content .contentList .works .pencel2')
+           var pencel3 = document.querySelector('#content .contentList .works .pencel3')
+           pencel1.style.transform = 'translate(0,0)';
+           pencel2.style.transform = 'translate(0,0)';
+           pencel3.style.transform = 'translate(0,0)';
+         },
+         outAnimation:function () {
+           var pencel1 = document.querySelector('#content .contentList .works .pencel1')
+           var pencel2 = document.querySelector('#content .contentList .works .pencel2')
+           var pencel3 = document.querySelector('#content .contentList .works .pencel3')
+
+           pencel1.style.transform = 'translate(0,-40px)';
+           pencel2.style.transform = 'translate(0,200px)';
+           pencel3.style.transform = 'translate(200px,200px)';
+         }
+       },
+       {
+         inAnimation:function () {
+           var box1 = document.querySelector('#content .contentList .about .about3 .about3Item:nth-child(1)')
+           var box2 = document.querySelector('#content .contentList .about .about3 .about3Item:nth-child(2)')
+           box1.style.transform = 'rotate(0)';
+           box2.style.transform = 'rotate(0)';
+         },
+         outAnimation:function () {
+           var box1 = document.querySelector('#content .contentList .about .about3 .about3Item:nth-child(1)')
+           var box2 = document.querySelector('#content .contentList .about .about3 .about3Item:nth-child(2)')
+
+           box1.style.transform = 'rotate(-30deg)';
+           box2.style.transform = 'rotate(30deg)';
+         }
+       },
+       {
+         inAnimation:function () {
+           var team1 = document.querySelector('#content .contentList .team .team1')
+           var team2 = document.querySelector('#content .contentList .team .team2')
+           team1.style.transform = 'translate(0,0)';
+           team2.style.transform = 'translate(0,0)';
+
+         },
+         outAnimation:function () {
+           var team1 = document.querySelector('#content .contentList .team .team1')
+           var team2 = document.querySelector('#content .contentList .team .team2')
+           team1.style.transform = 'translate(-200px,0)';
+           team2.style.transform = 'translate(200px,0)';
+         }
+       }
+     ]
+
+     //让所有屏都出去出场效果
+     for (var i=0; i<animationArr.length; i++ ){
+       animationArr[i].outAnimation()
+     }
+
+     //临时控制第一屏入场
+     setTimeout(function () {
+       animationArr[0].inAnimation()
+     },2000)
+
+     //开机动画
+     var arr = ['bg1.jpg','bg2.jpg','bg3.jpg','bg4.jpg','bg5.jpg','about1.jpg','about2.jpg','about3.jpg','about4.jpg','worksimg1.jpg','worksimg2.jpg','worksimg3.jpg','worksimg4.jpg','team.png','greenLine.png'];
+     var loaded = 0
+     for (var j=0; j<arr.length; j++ ){
+       var myImage = new Image();
+       myImage.src = './img/'+arr[j];
+       myImage.onload = function () {
+         loaded++;
+         maskLine.style.width = (loaded/arr.length)*100 + '%'
+       }
+     }
+
+     maskLine.addEventListener('transitionend',function () {
+       maskDown.style.height = '0'
+       maskUp.style.height = '0'
+       maskLine.remove()
+       
+     })
      
-   }
+     maskUp.addEventListener('transitionend',function () {
+       mask.remove()
+     })
+
+
+   })
     
   </script>
 </body>
